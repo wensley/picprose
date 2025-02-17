@@ -47,11 +47,13 @@ export const RightPropertyPanel = (props) => {
   const titleArr = config.title;
 
   const [titleValue, setTitleValue] = React.useState(
-    titleArr[Math.floor(Math.random() * 4)]
+    titleArr[Math.floor(Math.random() * 13)]
   );
   const [subTitleValue, setSubTitleValue] = React.useState(config.subTitle);
   const [authorValue, setAuthorValue] = React.useState(config.author);
   const [fontValue, setFontValue] = React.useState(config.font);
+  const [fontSizeValue, setFontSizeValue] = React.useState<SliderValue>(config.fontSize);
+  const [authorFontSizeValue, setAuthorFontSizeValue] = React.useState<SliderValue>(config.authorFontSize);
   const [iconValue, setIconValue] = React.useState(config.icon);
   const [backColor, setBackColor] = React.useState(config.backColor);
   const [backBlurLevel, setBackBlurLevel] = React.useState(
@@ -116,6 +118,8 @@ export const RightPropertyPanel = (props) => {
 
   const [propertyInfo, setPropertyInfo] = React.useState({
     font: "",
+    fontSizeValue: "",
+    authorFontSizeValue:"",
     title: "",
     subTitle: "",
     author: "",
@@ -155,6 +159,21 @@ export const RightPropertyPanel = (props) => {
       font: fontValue,
     }));
   }, [fontValue]);
+
+  React.useEffect(() => {
+    setPropertyInfo((preValue) => ({
+      ...preValue,
+      fontSizeValue: fontSizeValue,
+    }));
+  }, [fontSizeValue]);
+
+  React.useEffect(() => {
+    setPropertyInfo((preValue) => ({
+      ...preValue,
+      authorFontSizeValue: authorFontSizeValue,
+    }));
+  }, [authorFontSizeValue]);
+
 
   React.useEffect(() => {
     setPropertyInfo((preValue) => ({
@@ -322,12 +341,12 @@ export const RightPropertyPanel = (props) => {
                 color="primary"
                 variant="flat"
                 target="_blank"
-                href="https://github.com/gezhaoyou/picprose"
+                href="https://zzflybird.com"
               >
                 <i
                   className={`devicon-github-plain text-[#2F6EE7] dev-icon text-xl`}
                 />
-                GitHub
+                Blog
               </Button>
             </NavbarItem>
           </NavbarContent>
@@ -375,14 +394,14 @@ export const RightPropertyPanel = (props) => {
           step={5}
           className="max-w-md my-2"
         />
-        {/* <Slider
+        <Slider
           label="模糊"
           value={blurValue}
           onChange={setBlurValue}
           size="sm"
           step={20}
           className="max-w-md py-2"
-        /> */}
+        />
 
         <Divider />
         <div className="flex w-full py-2">
@@ -565,6 +584,17 @@ export const RightPropertyPanel = (props) => {
           onValueChange={setTitleValue}
         />
 
+        <Slider
+          label={t("font_size")}
+          value={fontSizeValue}
+          onChange={setFontSizeValue}
+          size="sm"
+          step={1}
+          min={10}
+          max={100}
+          className="max-w-md my-2"
+      />
+
         <Input
           label={t("author")}
           type="search"
@@ -573,6 +603,17 @@ export const RightPropertyPanel = (props) => {
           value={authorValue}
           onValueChange={setAuthorValue}
         />
+
+        <Slider
+          label={t("author_size")}
+          value={authorFontSizeValue}
+          onChange={setAuthorFontSizeValue}
+          size="sm"
+          step={1}
+          min={10}
+          max={100}
+          className="max-w-md my-2"
+      />
       </div>
       <Divider />
       <div className="w-full mt-4 px-4">
