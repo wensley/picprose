@@ -22,6 +22,7 @@ interface ImageEditorProps {
     image: { x: number; y: number };
   }>>;
   saveHistory: (elements: any) => void;
+  handleResetLayout: () => void;
 }
 
 // 拖动元素类型
@@ -34,7 +35,8 @@ export const ImageEditor = ({
   isDragMode, 
   elements, 
   setElements,
-  saveHistory
+  saveHistory,
+  handleResetLayout
 }: ImageEditorProps) => {
   // 从Context获取配置
   const { 
@@ -538,6 +540,13 @@ export const ImageEditor = ({
       saveHistory(elementsLayout);
     }
   }, [elementsLayout]);
+  
+  // 在组件挂载后自动重置布局
+  useEffect(() => {
+    // 组件挂载后调用重置布局方法
+    handleResetLayout();
+    // 仅在组件挂载时执行一次
+  }, []);
   
   return (
     <div className="max-h-screen relative flex group rounded-3xl">
